@@ -1,39 +1,38 @@
-// app/components/MessageInput.tsx
-"use client";
-
+// src/components/MessageInput.tsx
 import React, { useState } from "react";
 
 type MessageInputProps = {
-  onSend: (message: string) => void;
+  onSend: (text: string) => void;
+  isLoading: boolean;
 };
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
+const MessageInput: React.FC<MessageInputProps> = ({ onSend, isLoading }) => {
   const [input, setInput] = useState("");
 
-  const handleSend = () => {
-    if (input.trim()) {
+  const handleSubmit = () => {
+    if (input.trim() && !isLoading) { // 로딩 중에는 제출 불가
       onSend(input);
       setInput("");
     }
   };
 
   return (
-    <div className="p-4 bg-gray-800 w-full max-w-5xl mx-auto">
-      <div className="flex items-center bg-gray-700 p-2 rounded-full">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="메시지를 입력하세요..."
-          className="flex-1 bg-transparent text-white outline-none "
-        />
-        <button
-          onClick={handleSend}
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
-        >
-          Send
-        </button>
-      </div>
+    <div className="flex items-center bg-white p-2 rounded-full shadow-md"> {/* rounded-full 추가 */}
+      <input
+        className="flex-1 px-4 py-2 border rounded-full focus:outline-none" // rounded-full 추가
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && handleSubmit()}
+        placeholder="메시지를 입력하세요..."
+        disabled={isLoading} // 로딩 중일 때 입력 불가
+      />
+      <button
+        onClick={handleSubmit}
+        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-full" // rounded-full 추가
+        disabled={isLoading} // 로딩 중일 때 버튼 비활성화
+      >
+        {isLoading ? "Loading..." : "Send"} {/* 로딩 중일 때 텍스트 변경 */}
+      </button>
     </div>
   );
 };
