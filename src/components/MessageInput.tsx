@@ -18,18 +18,18 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
   };
 
   return (
-    <div className="flex p-4 bg-gray-800">
-      <div className="flex items-center w-full bg-gray-700 rounded-full px-4 py-2">
+    <div className="p-4 bg-gray-800 w-full max-w-5xl mx-auto">
+      <div className="flex items-center bg-gray-700 p-2 rounded-full">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="메시지를 입력하세요..."
-          className="flex-1 bg-transparent text-white outline-none"
+          className="flex-1 bg-transparent text-white outline-none "
         />
         <button
           onClick={handleSend}
-          className="bg-blue-500 text-white px-4 py-2 ml-2 rounded-full hover:bg-blue-600"
+          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
         >
           Send
         </button>
